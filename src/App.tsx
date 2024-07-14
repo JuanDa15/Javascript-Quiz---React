@@ -1,14 +1,15 @@
 import { Container, Stack, Typography } from '@mui/material';
-import { JavaScriptLogo } from './icons/JavaScriptLogo';
-import Start from './Start';
-import { useQuestionsSelector } from './store/questions';
+import { JavaScriptLogo } from './icons';
+import { Start, Game, SettingsFab } from './components';
+import { useQuestionsSelector } from './store';
 
 function App() {
   const { questions } = useQuestionsSelector();
 
-  console.log(questions);
+  const gameStatus = questions.length > 0 ? 'in-game' : 'stand-by';
+
   return (
-    <main>
+    <main style={{ minHeight: '100vh' }}>
       <Container maxWidth='sm'>
         <Stack
           direction='row'
@@ -22,7 +23,20 @@ function App() {
           </Typography>
         </Stack>
 
-        {questions.length === 0 ? <Start /> : <h1>Quiz</h1>}
+        {gameStatus === 'stand-by' ? (
+          <Stack
+            direction='row'
+            gap={2}
+            justifyContent='center'
+            alignItems='center'
+            sx={{ marginTop: '1rem' }}
+          >
+            <Start />
+            <SettingsFab />
+          </Stack>
+        ) : (
+          <Game />
+        )}
       </Container>
     </main>
   );

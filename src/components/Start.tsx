@@ -1,20 +1,16 @@
 import { Button, Stack } from '@mui/material';
-import { useQuestionsSelector } from './store/questions';
+import { useQuestionsSelector, useConfigSelector } from '../store';
 
-export default function Start(): JSX.Element {
+export const Start = (): JSX.Element => {
   const { fetchQuestions } = useQuestionsSelector();
+  const { totalQuestions } = useConfigSelector();
 
   const handleClick = () => {
-    fetchQuestions(5);
+    fetchQuestions(totalQuestions);
   };
 
   return (
-    <Stack
-      direction='row'
-      justifyItems='center'
-      alignItems='center'
-      style={{ marginTop: '1rem' }}
-    >
+    <Stack direction='row' justifyItems='center' alignItems='center'>
       <Button
         onClick={handleClick}
         variant='contained'
@@ -24,4 +20,4 @@ export default function Start(): JSX.Element {
       </Button>
     </Stack>
   );
-}
+};
